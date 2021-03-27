@@ -16,18 +16,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: wda43779/fwf
           tag_with_ref: true
-  deploy:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          docker pull wda43779/fwf
-          docker rm -f fwf
-          docker run -d --name fwf -p 3000:3000 wda43779/fwf
+      - name: deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker pull wda43779/fwf
+            docker rm -f fwf
+            docker run -d --name fwf -p 3000:3000 wda43779/fwf
