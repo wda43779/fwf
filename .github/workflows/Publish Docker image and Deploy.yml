@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: user/app:latest
+          tags: wda43779/fwf:latest
   deploy:
     name: Deploy to server
     runs-on: ubuntu-latest
